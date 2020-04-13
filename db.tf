@@ -12,6 +12,8 @@ resource "aws_db_instance" "public-db1" {
 
   db_subnet_group_name = aws_db_subnet_group.default.id
 
+  vpc_security_group_ids = ["sg-0be08360422e0322e"] // Allow vault Access
+
   storage_encrypted = true
 
   allow_major_version_upgrade = true
@@ -32,7 +34,7 @@ resource "aws_db_instance" "public-db1" {
 resource "vault_database_secret_backend_connection" "postgres" {
   backend       = vault_mount.db.path
   name          = aws_db_instance.public-db1.name
-  allowed_roles = ["dev", "prod"]
+  allowed_roles = ["*"]
 
   postgresql {
     connection_url = "postgres://${aws_db_instance.public-db1.username}:initpass@${aws_db_instance.public-db1.endpoint}/${aws_db_instance.public-db1.name}"
