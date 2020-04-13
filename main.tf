@@ -55,7 +55,7 @@ resource "aws_db_instance" "public-db1" {
   password = "initpass"
   allocated_storage = 10
   engine_version = "11.5"
-  max_allocated_storage = 10
+  max_allocated_storage = 50
   port = 5432
 
   db_subnet_group_name = aws_db_subnet_group.default.id
