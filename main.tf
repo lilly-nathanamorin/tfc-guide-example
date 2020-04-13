@@ -21,6 +21,10 @@ resource "aws_dynamodb_table" "tfc_example_table" {
   }
 }
 
+data "aws_cloudformation_export" "vpc_id" {
+  name = "DefaultVPC"
+}
+
 data "aws_subnet_ids" "private" { 
   vpc_id = data.aws_cloudformation_export.vpc_id.value
 
